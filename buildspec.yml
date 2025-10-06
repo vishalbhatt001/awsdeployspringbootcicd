@@ -6,14 +6,17 @@ phases:
       java: 17
     commands:
       - echo Installing Maven
-      - apt-get update && apt-get install -y maven
+      - yum update -y && yum install -y maven
+      - export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
   pre_build:
     commands:
       - echo Pre-build phase
+      - export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
       - mvn --version
   build:
     commands:
       - echo Build started on `date`
+      - export JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
       - mvn clean package
   post_build:
     commands:
